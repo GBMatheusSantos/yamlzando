@@ -1,0 +1,17 @@
+,column,description,classification,treatment,review_dg_column,confidentiality_level,ref,long_description
+0,opb_analytics_transaction_id,Chave única da tabela composta pela função monotonically_increasing_id,public,nan,True,internal,,
+1,user_id,Chave do usuário dentro do sistema GuiaBolso,public,nan,False,internal,['n-1 open_banking.opb_credentials.user_id'],
+2,user_type,Tipo do usuário do PicPay. Pode ser CONSUMER (PF) ou SELLER (PJ).,public,nan,False,internal,,
+3,transaction_id,Chave de identificação da transacao,public,nan,True,internal,['n-1 open_banking.opb_transactions.transaction_id'],
+4,transaction_name,nome da transação,public,nan,True,internal,,
+5,provider_id,Identificador da instituição financeira,public,nan,True,internal,['n-1 open_banking.opb_credentials.provider_id'],
+6,transaction_date,Data/Hora em GMT-3 da transação,public,nan,True,internal,,
+7,account_type,Tipos de contas,public,nan,True,internal,,"Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum. Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante. Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado. Conta de pagamento pré-paga - segundo CIRCULAR Nº 3.680, BCB de 2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'"
+8,transaction_amount,Valor da transação na moeda original,public,nan,True,internal,,
+9,transaction_currency,Moeda usada para transação,public,nan,True,internal,,
+10,transaction_brazilian_amount,"Valor da transação expresso em valor monetário com 4 casas decimais, em moeda corrente do Brasil",public,nan,True,internal,,
+11,account_id,Chave estrangeira com id das tabelas de conta corrente e conta cartão de credito,public,nan,True,internal,['n-1 open_banking.opb_credit_card_accounts.credit_card_account_id n-1 open_banking.opb_pre_paid_accounts.pre_paid_account_id'],
+12,transaction_type,"tipo de transação. PAGAMENTO, TARIFA, OPERACOES_CREDITO_CONTRATADAS_CARTAO, ESTORNO, CASHBACK, OUTROS",public,nan,True,internal,,
+13,cc_line_name,Tipo de operação (https://openbanking-brasil.github.io/areadesenvolvedor/#tocS_EnumCreditCardAccountsLineName),public,nan,True,internal,,
+14,cc_fee_type,Traz os tipos de Tarifas,public,nan,True,internal,,"(Vide Enum) Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA. [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'"
+15,cc_other_credits_type,Traz outros tipos de crédito contratados no cartão. [Restrição] Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO',public,nan,True,internal,,

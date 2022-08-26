@@ -1,0 +1,112 @@
+table_name: opb_analytics_overdraft
+description: Tabela analítica utilizada como input para feature store no calculo de variaveis de limite de conta corrente. Junta informações de opb_credentials, opb_accounts, opb_pre_paid_accounts, opb_pre_paid_accounts_overdraft_limit
+business_owner: 
+  -
+    marlon.pacheco@picpay.com
+data_steward: 
+  -
+    mauricio.bezerra@picpay.com
+review_dg: True
+update_frequency: diária
+certified: gray
+source: internal
+tags:
+  - 
+    open_banking
+
+columns_description:
+  -
+    column: opb_analytics_overdraft_id
+    description: Chave única da tabela composta pela função monotonically_increasing_id
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: user_id
+    description: Chave do usuário dentro do sistema GuiaBolso
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_credentials.user_id
+  -
+    column: user_type
+    description: Tipo do usuário do PicPay. Pode ser CONSUMER (PF) ou SELLER (PJ).
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+  -
+    column: provider_id
+    description: Identificador da instituição financeira
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_credentials.provider_id
+  -
+    column: pre_paid_account_id
+    description: Chave primária da tabela pre_paid_accounts que vem da tabela account
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_pre_paid_accounts.pre_paid_account_id
+  -
+    column: created_at
+    description: Data/hora em GMT-3 de criação do registro
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: updated_at
+    description: Data/hora em GMT-3 da última modificação
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: overdraft_contracted_limit
+    description: Valor do limite contratado do cheque especial.
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+  -
+    column: overdraft_used_limit
+    description: Valor utilizado total do limite do cheque especial e o adiantamento a depositante.
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+  -
+    column: unarranged_overdraft_amount
+    description: Valor de operação contratada em caráter emergencial para cobertura de saldo devedor em conta de depósitos à vista e de excesso sobre o limite pactuado de cheque especial.
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+  -
+    column: account_type
+    description: Tipos de contas 
+    long_description: Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum. Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante. Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado. Conta de pagamento pré-paga - segundo CIRCULAR Nº 3.680, BCB de 2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: account_sub_type
+    description: Subtipo de conta (vide Enum)
+    long_description: Conta individual - possui um único titular - Conta conjunta simples - onde as movimentações financeiras só podem serem realizadas mediante autorização de TODOS os correntistas da conta. - Conta conjunta solidária - é a modalidade cujos titulares podem realizar movimentações de forma isolada, isto é, sem que seja necessária a autorização dos demais titulares
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal

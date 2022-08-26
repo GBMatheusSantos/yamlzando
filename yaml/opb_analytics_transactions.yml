@@ -1,0 +1,144 @@
+table_name: opb_analytics_transactions
+description: Tabela analítica que junta informações de opb_transactions, opb_credentials, opb_accounts, opb_credit_card_transactions.
+business_owner: 
+  -
+    marlon.pacheco@picpay.com
+data_steward: 
+  -
+    mauricio.bezerra@picpay.com
+review_dg: True
+update_frequency: diária
+certified: gray
+source: internal
+tags:
+  - 
+    open_banking
+
+columns_description:
+  -
+    column: opb_analytics_transaction_id
+    description: Chave única da tabela composta pela função monotonically_increasing_id
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: user_id
+    description: Chave do usuário dentro do sistema GuiaBolso
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_credentials.user_id
+  -
+    column: user_type
+    description: Tipo do usuário do PicPay. Pode ser CONSUMER (PF) ou SELLER (PJ).
+    classification: public
+    treatment: nan
+    review_dg_column: False
+    confidentiality_level: internal
+  -
+    column: transaction_id
+    description: Chave de identificação da transacao
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_transactions.transaction_id
+  -
+    column: transaction_name
+    description: nome da transação
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: provider_id
+    description: Identificador da instituição financeira
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_credentials.provider_id
+  -
+    column: transaction_date
+    description: Data/Hora em GMT-3 da transação
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: account_type
+    description: Tipos de contas 
+    long_description: Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum. Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante. Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado. Conta de pagamento pré-paga - segundo CIRCULAR Nº 3.680, BCB de 2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: transaction_amount
+    description: Valor da transação na moeda original
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: transaction_currency
+    description: Moeda usada para transação
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: transaction_brazilian_amount
+    description: Valor da transação expresso em valor monetário com 4 casas decimais, em moeda corrente do Brasil
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: account_id
+    description: Chave estrangeira com id das tabelas de conta corrente e conta cartão de credito
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+    ref:
+      - 
+        n-1 open_banking.opb_credit_card_accounts.credit_card_account_id
+        n-1 open_banking.opb_pre_paid_accounts.pre_paid_account_id
+  -
+    column: transaction_type
+    description: tipo de transação. PAGAMENTO, TARIFA, OPERACOES_CREDITO_CONTRATADAS_CARTAO, ESTORNO, CASHBACK, OUTROS
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: cc_line_name
+    description: Tipo de operação (https://openbanking-brasil.github.io/areadesenvolvedor/#tocS_EnumCreditCardAccountsLineName)
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: cc_fee_type
+    description: Traz os tipos de Tarifas
+    long_description: (Vide Enum) Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA. [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal
+  -
+    column: cc_other_credits_type
+    description: Traz outros tipos de crédito contratados no cartão. [Restrição] Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'
+    classification: public
+    treatment: nan
+    review_dg_column: True
+    confidentiality_level: internal  
